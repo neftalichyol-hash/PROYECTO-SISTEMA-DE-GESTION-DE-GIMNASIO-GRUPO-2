@@ -30,6 +30,6 @@ public class Equipamiento {
 
     // FK_Equipamiento_AreaGimnasio
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "AreaGimnasioID", nullable = false)
+    @JoinColumn(name = "AreaID", nullable = false)
     private AreaGimnasio areaGimnasio;
 }

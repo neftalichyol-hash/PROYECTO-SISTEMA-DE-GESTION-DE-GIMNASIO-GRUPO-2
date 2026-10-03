@@ -12,7 +12,7 @@ public class AreaGimnasio {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "AreaGimnasioID")
+    @Column(name = "AreaID")
     private Integer areaGimnasioId;
 
     @Column(name = "Nombre", nullable = false, length = 100)
@@ -20,9 +20,6 @@ public class AreaGimnasio {
 
     @Column(name = "Descripcion", length = 255)
     private String descripcion;
-
-    @Column(name = "Capacidad")
-    private Integer capacidad;
 
     @Column(name = "Estado", nullable = false)
     @Builder.Default

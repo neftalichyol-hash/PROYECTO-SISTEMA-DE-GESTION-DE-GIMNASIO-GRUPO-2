@@ -33,7 +33,6 @@ public class AreaGimnasioService {
         AreaGimnasio area = obtenerPorId(id);
         area.setNombre(areaDetails.getNombre());
         area.setDescripcion(areaDetails.getDescripcion());
-        area.setCapacidad(areaDetails.getCapacidad());
         area.setEstado(areaDetails.getEstado());
         return areaRepository.save(area);
     }
