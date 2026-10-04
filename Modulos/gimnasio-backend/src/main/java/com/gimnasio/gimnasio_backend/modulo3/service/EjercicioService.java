@@ -26,7 +26,9 @@ public class EjercicioService {
     public EjercicioDTO.Response crear(EjercicioDTO.Request req) {
         Ejercicio ejercicio = Ejercicio.builder()
                 .nombre(req.getNombre())
-                .grupoMuscular(req.getGrupoMuscular())
+                .grupoMuscularId(req.getGrupoMuscularId())
+                .nivelDificultadId(req.getNivelDificultadId())
+                .equipamientoId(req.getEquipamientoId())
                 .descripcion(req.getDescripcion())
                 .estado(true)
                 .build();
@@ -38,7 +40,9 @@ public class EjercicioService {
         EjercicioDTO.Response res = new EjercicioDTO.Response();
         res.setEjercicioId(e.getEjercicioId());
         res.setNombre(e.getNombre());
-        res.setGrupoMuscular(e.getGrupoMuscular());
+        res.setGrupoMuscularId(e.getGrupoMuscularId());
+        res.setNivelDificultadId(e.getNivelDificultadId());
+        res.setEquipamientoId(e.getEquipamientoId());
         res.setDescripcion(e.getDescripcion());
         res.setEstado(e.getEstado());
         return res;

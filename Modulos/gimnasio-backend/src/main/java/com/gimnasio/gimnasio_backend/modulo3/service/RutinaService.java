@@ -5,9 +5,10 @@ import com.gimnasio.gimnasio_backend.modulo2.entity.Entrenador;
 import com.gimnasio.gimnasio_backend.modulo2.repository.ClienteRepository;
 import com.gimnasio.gimnasio_backend.modulo2.repository.EntrenadorRepository;
 import com.gimnasio.gimnasio_backend.modulo3.dto.RutinaDTO;
-import com.gimnasio.gimnasio_backend.modulo3.entity.DetalleRutina;
+import com.gimnasio.gimnasio_backend.modulo3.entity.DiaRutina;
 import com.gimnasio.gimnasio_backend.modulo3.entity.Ejercicio;
 import com.gimnasio.gimnasio_backend.modulo3.entity.Rutina;
+import com.gimnasio.gimnasio_backend.modulo3.entity.RutinaEjercicio;
 import com.gimnasio.gimnasio_backend.modulo3.repository.EjercicioRepository;
 import com.gimnasio.gimnasio_backend.modulo3.repository.RutinaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,25 +53,40 @@ public class RutinaService {
                 .entrenador(entrenador)
                 .nombre(req.getNombre())
                 .objetivo(req.getObjetivo())
-                .fechaCreacion(LocalDate.now())
+                .fechaInicio((req.getFechaInicio() != null) ? req.getFechaInicio() : LocalDate.now())
+                .fechaFin(req.getFechaFin())
                 .estado(true)
                 .build();
 
-        if (req.getDetalles() != null) {
-            List<DetalleRutina> detalles = req.getDetalles().stream().map(dReq -> {
-                Ejercicio ejercicio = ejercicioRepository.findById(dReq.getEjercicioId())
-                        .orElseThrow(() -> new RuntimeException("Ejercicio no encontrado ID: " + dReq.getEjercicioId()));
-                return DetalleRutina.builder()
+        if (req.getDias() != null) {
+            List<DiaRutina> dias = req.getDias().stream().map(dReq -> {
+                DiaRutina diaRutina = DiaRutina.builder()
                         .rutina(rutina)
-                        .ejercicio(ejercicio)
                         .diaSemana(dReq.getDiaSemana())
-                        .series(dReq.getSeries())
-                        .repeticiones(dReq.getRepeticiones())
-                        .descansoSegundos(dReq.getDescansoSegundos())
+                        .ordenDia(dReq.getOrdenDia())
                         .build();
+
+                if (dReq.getEjercicios() != null) {
+                    List<RutinaEjercicio> ejercicios = dReq.getEjercicios().stream().map(eReq -> {
+                        Ejercicio ejercicio = ejercicioRepository.findById(eReq.getEjercicioId())
+                                .orElseThrow(() -> new RuntimeException("Ejercicio no encontrado: " + eReq.getEjercicioId()));
+
+                        return RutinaEjercicio.builder()
+                                .diaRutina(diaRutina)
+                                .ejercicio(ejercicio)
+                                .series(eReq.getSeries())
+                                .repeticiones(eReq.getRepeticiones())
+                                .descansoSegundos((eReq.getDescansoSegundos() != null) ? eReq.getDescansoSegundos() : 60)
+                                .observaciones(eReq.getObservaciones())
+                                .build();
+                    }).collect(Collectors.toList());
+
+                    diaRutina.setEjercicios(ejercicios);
+                }
+                return diaRutina;
             }).collect(Collectors.toList());
 
-            rutina.setDetalles(detalles);
+            rutina.setDias(dias);
         }
 
         return mapToResponse(rutinaRepository.save(rutina));
@@ -85,19 +101,30 @@ public class RutinaService {
         res.setNombreEntrenador(r.getEntrenador().getNombres() + " " + r.getEntrenador().getApellidos());
         res.setNombre(r.getNombre());
         res.setObjetivo(r.getObjetivo());
-        res.setFechaCreacion(r.getFechaCreacion());
+        res.setFechaInicio(r.getFechaInicio());
+        res.setFechaFin(r.getFechaFin());
         res.setEstado(r.getEstado());
 
-        if (r.getDetalles() != null) {
-            res.setDetalles(r.getDetalles().stream().map(d -> {
-                RutinaDTO.DetalleResponse dRes = new RutinaDTO.DetalleResponse();
-                dRes.setDetalleRutinaId(d.getDetalleRutinaId());
-                dRes.setEjercicioId(d.getEjercicio().getEjercicioId());
-                dRes.setNombreEjercicio(d.getEjercicio().getNombre());
+        if (r.getDias() != null) {
+            res.setDias(r.getDias().stream().map(d -> {
+                RutinaDTO.DiaResponse dRes = new RutinaDTO.DiaResponse();
+                dRes.setDiaRutinaId(d.getDiaRutinaId());
                 dRes.setDiaSemana(d.getDiaSemana());
-                dRes.setSeries(d.getSeries());
-                dRes.setRepeticiones(d.getRepeticiones());
-                dRes.setDescansoSegundos(d.getDescansoSegundos());
+                dRes.setOrdenDia(d.getOrdenDia());
+
+                if (d.getEjercicios() != null) {
+                    dRes.setEjercicios(d.getEjercicios().stream().map(e -> {
+                        RutinaDTO.EjercicioResponse eRes = new RutinaDTO.EjercicioResponse();
+                        eRes.setRutinaEjercicioId(e.getRutinaEjercicioId());
+                        eRes.setEjercicioId(e.getEjercicio().getEjercicioId());
+                        eRes.setNombreEjercicio(e.getEjercicio().getNombre());
+                        eRes.setSeries(e.getSeries());
+                        eRes.setRepeticiones(e.getRepeticiones());
+                        eRes.setDescansoSegundos(e.getDescansoSegundos());
+                        eRes.setObservaciones(e.getObservaciones());
+                        return eRes;
+                    }).collect(Collectors.toList()));
+                }
                 return dRes;
             }).collect(Collectors.toList()));
         }

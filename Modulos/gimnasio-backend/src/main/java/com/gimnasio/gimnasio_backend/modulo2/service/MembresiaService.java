@@ -34,7 +34,8 @@ public class MembresiaService {
                 .orElseThrow(() -> new RuntimeException("Tipo de membresía no encontrado."));
 
         LocalDate fechaInicio = (req.getFechaInicio() != null) ? req.getFechaInicio() : LocalDate.now();
-        LocalDate fechaVencimiento = fechaInicio.plusDays(tipo.getDuracionDias());
+        // Corregido: Se calcula sumando los meses indicados en DuracionMeses
+        LocalDate fechaVencimiento = fechaInicio.plusMonths(tipo.getDuracionMeses());
 
         Membresia membresia = Membresia.builder()
                 .cliente(cliente)

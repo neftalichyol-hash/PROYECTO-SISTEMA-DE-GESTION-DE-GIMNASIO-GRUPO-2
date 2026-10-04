@@ -19,14 +19,14 @@ public class TipoMembresia {
     @Column(name = "Nombre", nullable = false, length = 50)
     private String nombre;
 
-    @Column(name = "Descripcion", length = 255)
-    private String descripcion;
-
-    @Column(name = "DuracionDias", nullable = false)
-    private Integer duracionDias;
+    @Column(name = "DuracionMeses", nullable = false) // Corregido: En la BD es DuracionMeses
+    private Integer duracionMeses;
 
     @Column(name = "Precio", nullable = false, precision = 10, scale = 2)
     private BigDecimal precio;
+
+    @Column(name = "Descripcion", length = 250)
+    private String descripcion;
 
     @Column(name = "Estado", nullable = false)
     @Builder.Default

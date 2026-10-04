@@ -15,13 +15,19 @@ public class Ejercicio {
     @Column(name = "EjercicioID")
     private Integer ejercicioId;
 
-    @Column(name = "Nombre", nullable = false, length = 100)
+    @Column(name = "GrupoMuscularID", nullable = false)
+    private Integer grupoMuscularId;
+
+    @Column(name = "NivelDificultadID", nullable = false)
+    private Integer nivelDificultadId;
+
+    @Column(name = "EquipamientoID")
+    private Integer equipamientoId;
+
+    @Column(name = "Nombre", nullable = false, length = 100, unique = true)
     private String nombre;
 
-    @Column(name = "GrupoMuscular", nullable = false, length = 50)
-    private String grupoMuscular;
-
-    @Column(name = "Descripcion", length = 255)
+    @Column(name = "Descripcion", length = 250)
     private String descripcion;
 
     @Column(name = "Estado", nullable = false)

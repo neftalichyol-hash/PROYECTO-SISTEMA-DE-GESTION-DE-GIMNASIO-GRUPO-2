@@ -19,23 +19,17 @@ public class ProgresoCliente {
     @Column(name = "ProgresoID")
     private Integer progresoId;
 
-    // FK_ProgresoCliente_Cliente
+    // FK_Progreso_Cliente
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ClienteID", nullable = false)
     private Cliente cliente;
 
-    @Column(name = "FechaMedicion", nullable = false)
-    private LocalDate fechaMedicion;
+    @Column(name = "Fecha", nullable = false) // Corregido: En la BD es Fecha
+    private LocalDate fecha;
 
-    @Column(name = "PesoKg", precision = 5, scale = 2)
-    private BigDecimal pesoKg;
+    @Column(name = "Peso", precision = 6, scale = 2) // Corregido: En la BD es Peso
+    private BigDecimal peso;
 
-    @Column(name = "PorcentajeGrasa", precision = 5, scale = 2)
-    private BigDecimal porcentajeGrasa;
-
-    @Column(name = "MasaMuscularKg", precision = 5, scale = 2)
-    private BigDecimal masaMuscularKg;
-
-    @Column(name = "Observaciones", length = 255)
+    @Column(name = "Observaciones", length = 500) // Corregido: En la BD es VARCHAR(500)
     private String observaciones;
 }

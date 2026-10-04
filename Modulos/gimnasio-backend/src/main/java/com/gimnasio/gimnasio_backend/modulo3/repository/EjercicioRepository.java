@@ -9,5 +9,5 @@ import java.util.List;
 @Repository
 public interface EjercicioRepository extends JpaRepository<Ejercicio, Integer> {
     List<Ejercicio> findByEstadoTrue();
-    List<Ejercicio> findByGrupoMuscularAndEstadoTrue(String grupoMuscular);
+    List<Ejercicio> findByGrupoMuscularIdAndEstadoTrue(Integer grupoMuscularId);
 }

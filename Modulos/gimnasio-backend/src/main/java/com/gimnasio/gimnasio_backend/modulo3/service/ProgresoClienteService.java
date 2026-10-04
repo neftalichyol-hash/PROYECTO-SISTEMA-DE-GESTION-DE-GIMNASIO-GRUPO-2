@@ -23,7 +23,7 @@ public class ProgresoClienteService {
     private ClienteRepository clienteRepository;
 
     public List<ProgresoClienteDTO.Response> listarPorCliente(Integer clienteId) {
-        return progresoClienteRepository.findByClienteClienteIdOrderByFechaMedicionDesc(clienteId).stream()
+        return progresoClienteRepository.findByClienteClienteIdOrderByFechaDesc(clienteId).stream()
                 .map(this::mapToResponse)
                 .collect(Collectors.toList());
     }
@@ -35,10 +35,8 @@ public class ProgresoClienteService {
 
         ProgresoCliente progreso = ProgresoCliente.builder()
                 .cliente(cliente)
-                .fechaMedicion((req.getFechaMedicion() != null) ? req.getFechaMedicion() : LocalDate.now())
-                .pesoKg(req.getPesoKg())
-                .porcentajeGrasa(req.getPorcentajeGrasa())
-                .masaMuscularKg(req.getMasaMuscularKg())
+                .fecha((req.getFecha() != null) ? req.getFecha() : LocalDate.now())
+                .peso(req.getPeso())
                 .observaciones(req.getObservaciones())
                 .build();
 
@@ -49,10 +47,8 @@ public class ProgresoClienteService {
         ProgresoClienteDTO.Response res = new ProgresoClienteDTO.Response();
         res.setProgresoId(p.getProgresoId());
         res.setClienteId(p.getCliente().getClienteId());
-        res.setFechaMedicion(p.getFechaMedicion());
-        res.setPesoKg(p.getPesoKg());
-        res.setPorcentajeGrasa(p.getPorcentajeGrasa());
-        res.setMasaMuscularKg(p.getMasaMuscularKg());
+        res.setFecha(p.getFecha());
+        res.setPeso(p.getPeso());
         res.setObservaciones(p.getObservaciones());
         return res;
     }

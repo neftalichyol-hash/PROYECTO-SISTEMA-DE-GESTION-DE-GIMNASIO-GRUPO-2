@@ -13,21 +13,24 @@ public class AsignacionEntrenador {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "AsignacionEntrenadorID")
-    private Integer asignacionEntrenadorId;
+    @Column(name = "AsignacionID") // Corregido: En la BD es AsignacionID
+    private Integer asignacionId;
 
-    // FK_AsignacionEntrenador_Cliente
+    // FK_Asignacion_Cliente
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ClienteID", nullable = false)
     private Cliente cliente;
 
-    // FK_AsignacionEntrenador_Entrenador
+    // FK_Asignacion_Entrenador
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "EntrenadorID", nullable = false)
     private Entrenador entrenador;
 
-    @Column(name = "FechaAsignacion", nullable = false)
-    private LocalDate fechaAsignacion;
+    @Column(name = "FechaInicio", nullable = false) // Corregido: En la BD es FechaInicio
+    private LocalDate fechaInicio;
+
+    @Column(name = "FechaFin") // Agregado: Campo existente en la BD
+    private LocalDate fechaFin;
 
     @Column(name = "Estado", nullable = false)
     @Builder.Default

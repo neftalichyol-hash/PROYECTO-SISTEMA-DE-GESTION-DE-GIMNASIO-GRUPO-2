@@ -7,12 +7,19 @@ import java.util.List;
 public class RutinaDTO {
 
     @Data
-    public static class DetalleRequest {
+    public static class EjercicioRequest {
         private Integer ejercicioId;
-        private String diaSemana;
         private Integer series;
         private Integer repeticiones;
         private Integer descansoSegundos;
+        private String observaciones;
+    }
+
+    @Data
+    public static class DiaRequest {
+        private String diaSemana;
+        private Integer ordenDia;
+        private List<EjercicioRequest> ejercicios;
     }
 
     @Data
@@ -21,18 +28,28 @@ public class RutinaDTO {
         private Integer entrenadorId;
         private String nombre;
         private String objetivo;
-        private List<DetalleRequest> detalles;
+        private LocalDate fechaInicio;
+        private LocalDate fechaFin;
+        private List<DiaRequest> dias;
     }
 
     @Data
-    public static class DetalleResponse {
-        private Integer detalleRutinaId;
+    public static class EjercicioResponse {
+        private Integer rutinaEjercicioId;
         private Integer ejercicioId;
         private String nombreEjercicio;
-        private String diaSemana;
         private Integer series;
         private Integer repeticiones;
         private Integer descansoSegundos;
+        private String observaciones;
+    }
+
+    @Data
+    public static class DiaResponse {
+        private Integer diaRutinaId;
+        private String diaSemana;
+        private Integer ordenDia;
+        private List<EjercicioResponse> ejercicios;
     }
 
     @Data
@@ -44,8 +61,9 @@ public class RutinaDTO {
         private String nombreEntrenador;
         private String nombre;
         private String objetivo;
-        private LocalDate fechaCreacion;
+        private LocalDate fechaInicio;
+        private LocalDate fechaFin;
         private Boolean estado;
-        private List<DetalleResponse> detalles;
+        private List<DiaResponse> dias;
     }
 }

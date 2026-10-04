@@ -9,10 +9,8 @@ public class ProgresoClienteDTO {
     @Data
     public static class Request {
         private Integer clienteId;
-        private LocalDate fechaMedicion;
-        private BigDecimal pesoKg;
-        private BigDecimal porcentajeGrasa;
-        private BigDecimal masaMuscularKg;
+        private LocalDate fecha;
+        private BigDecimal peso;
         private String observaciones;
     }
 
@@ -20,10 +18,8 @@ public class ProgresoClienteDTO {
     public static class Response {
         private Integer progresoId;
         private Integer clienteId;
-        private LocalDate fechaMedicion;
-        private BigDecimal pesoKg;
-        private BigDecimal porcentajeGrasa;
-        private BigDecimal masaMuscularKg;
+        private LocalDate fecha;
+        private BigDecimal peso;
         private String observaciones;
     }
 }

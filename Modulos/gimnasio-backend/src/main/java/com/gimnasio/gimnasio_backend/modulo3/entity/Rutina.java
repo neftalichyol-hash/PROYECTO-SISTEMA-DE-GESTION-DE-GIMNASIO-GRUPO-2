@@ -34,11 +34,14 @@ public class Rutina {
     @Column(name = "Nombre", nullable = false, length = 100)
     private String nombre;
 
-    @Column(name = "Objetivo", length = 100)
+    @Column(name = "Objetivo", length = 250)
     private String objetivo;
 
-    @Column(name = "FechaCreacion", nullable = false)
-    private LocalDate fechaCreacion;
+    @Column(name = "FechaInicio", nullable = false) // Corregido: En la BD es FechaInicio
+    private LocalDate fechaInicio;
+
+    @Column(name = "FechaFin") // Agregado: Columna de la BD
+    private LocalDate fechaFin;
 
     @Column(name = "Estado", nullable = false)
     @Builder.Default
@@ -46,5 +49,5 @@ public class Rutina {
 
     @OneToMany(mappedBy = "rutina", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
-    private List<DetalleRutina> detalles = new ArrayList<>();
+    private List<DiaRutina> dias = new ArrayList<>();
 }
