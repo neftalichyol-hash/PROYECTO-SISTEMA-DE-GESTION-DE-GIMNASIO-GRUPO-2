@@ -1,0 +1,1 @@
+ALTER TABLE dbo.Equipamiento ADD NumeroSerie varchar(50) NULL;
