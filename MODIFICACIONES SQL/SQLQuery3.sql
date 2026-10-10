@@ -1,0 +1,1 @@
+ALTER TABLE dbo.Equipamiento ADD FechaAdquisicion date NULL;
